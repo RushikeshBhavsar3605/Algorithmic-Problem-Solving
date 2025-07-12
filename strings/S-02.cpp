@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+string reverseWords(string s)
+{
+    int n = s.size();
+    string ans = "";
+    reverse(s.begin(), s.end());
+    for (int i = 0; i < n; i++)
+    {
+        string word = "";
+        while (i < n && s[i] != ' ')
+            word += s[i++];
+        reverse(word.begin(), word.end());
+        if (word.size() > 0)
+            ans += " " + word;
+    }
+    return ans.substr(1);
+}
+int main()
+{
+    cout << reverseWords("the sky is blue") << endl;
+    return 0;
+}
+
+/*
+Problem: Reverse Words in a String.
+*/
