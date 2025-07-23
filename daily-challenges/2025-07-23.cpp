@@ -17,19 +17,23 @@ using namespace std;
 
 class Solution {
   private:
+    // Removes all occurrences of the given pair in one pass,
+    // adds up score for each removal, and rebuilds the leftover string.
     int removePairs(string &s, string pair, int score) {
         int result = 0;
         stack<char> st;
 
+        // Scan through s, use stack to detect and remove matching pairs
         iterate(it, s)
             if (it == pair[1] && !st.empty() && st.top() == pair[0]) {
-                st.pop();
-                result += score;
+                st.pop();        // remove the matched opening char
+                result += score; // accumulate score
             }
             else
-                st.push(it);
+                st.push(it);     // keep unmatched chars
 
-        s = "";
+        // Reconstruct s from any leftover chars in stack
+        s.clear();
         while (!st.empty()) {
             s.push_back(st.top());
             st.pop();
@@ -42,9 +46,15 @@ class Solution {
     int maximumGain(string s, int x, int y) {
         int result = 0;
 
-        string pair = x > y ? "ab" : "ba";
-        result += removePairs(s, pair, max(x, y));
-        result += removePairs(s, pair == "ab" ? "ab" : "ba", min(x, y));
+        // Decide which pair to remove first based on higher score
+        string firstPair = x > y ? "ab" : "ba";
+        string secondPair = firstPair == "ab" ? "ba" : "ab";
+
+        // First pass: remove the more valuable pair
+        result += removePairs(s, firstPair, max(x, y));
+
+        // Second pass: remove the other pair on the leftover string
+        result += removePairs(s, secondPair, min(x, y));
 
         return result;
     }
