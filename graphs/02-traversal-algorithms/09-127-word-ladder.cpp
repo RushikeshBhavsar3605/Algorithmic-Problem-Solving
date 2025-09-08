@@ -38,35 +38,36 @@ using namespace std;
 class Solution {
   public:
     int ladderLength(string beginWord, string endWord, vector<string> &wordList) {
-        queue<pair<string, int>> q;
+        queue<pair<string, int>> q; // BFS queue: {current word, steps taken}
         q.push({beginWord, 1});
-        unordered_set<string> st(all(wordList));
-        st.erase(beginWord);
+
+        unordered_set<string> st(all(wordList)); // store wordList for O(1) lookup
+        st.erase(beginWord);                     // avoid revisiting start word
 
         while (!q.empty()) {
             string word = q.front().first;
             int steps = q.front().second;
             q.pop();
 
-            if (word == endWord)
+            if (word == endWord) // found target
                 return steps;
 
             loop(i, 0, sz(word)) {
-                char original = word[i];
+                char original = word[i]; // store original char
 
                 for (char ch = 'a'; ch <= 'z'; ch++) {
-                    word[i] = ch;
-                    if (st.find(word) != st.end()) {
-                        st.erase(word);
-                        q.push({word, steps + 1});
+                    word[i] = ch;                    // try every possible letter
+                    if (st.find(word) != st.end()) { // valid transformation
+                        st.erase(word);              // mark as visited
+                        q.push({word, steps + 1});   // push next state
                     }
                 }
 
-                word[i] = original;
+                word[i] = original; // restore word for next iteration
             }
         }
 
-        return 0;
+        return 0; // no transformation found
     }
 };
 
