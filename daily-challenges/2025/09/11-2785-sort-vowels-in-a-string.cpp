@@ -56,16 +56,23 @@ using namespace std;
 class Solution {
   public:
     string sortVowels(string s) {
+        // Define set of all vowels (lowercase and uppercase)
         set<char> st = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+
+        // Min heap to store vowels in sorted order
         priority_queue<char, vector<char>, greater<char>> max_Heap;
+
+        // Store indices where vowels are found
         set<int> vowelsIdx;
 
+        // Extract vowels and their positions
         loop(i, 0, sz(s))
             if (st.count(s[i])) {
                 max_Heap.push(s[i]);
                 vowelsIdx.insert(i);
             }
 
+        // Rebuild string: replace vowels with sorted ones, keep consonants unchanged
         string result;
         loop(i, 0, sz(s))
             if (vowelsIdx.count(i)) {
