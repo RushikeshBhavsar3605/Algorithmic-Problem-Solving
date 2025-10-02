@@ -80,7 +80,7 @@ class Solution {
 };
 */
 
-/* Approach 2 (Optimized): */
+/* Approach 2 (Optimized):
 class Solution {
   public:
     int numWaterBottles(int numBottles, int numExchange) {
@@ -96,6 +96,15 @@ class Solution {
         }
 
         return consumedBottles + numBottles;
+    }
+};
+*/
+
+/* Approach 3 (Math): */
+class Solution {
+  public:
+    int numWaterBottles(int numBottles, int numExchange) {
+        return numBottles + (numBottles - 1) / (numExchange - 1);
     }
 };
 
