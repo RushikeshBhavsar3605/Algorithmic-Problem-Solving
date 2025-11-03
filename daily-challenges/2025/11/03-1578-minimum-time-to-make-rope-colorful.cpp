@@ -62,7 +62,31 @@ using namespace std;
         std::cout << (x) << '\n';                                                                                      \
     } while (0)
 
-/* Approach 1 (Greedy): */
+/* Approach 1 (Two Pointer):
+class Solution {
+  public:
+    int minCost(string colors, vector<int> &neededTime) {
+        int n = sz(colors);
+
+        int left = 0;
+        int sum = 0;
+        loop(right, 1, n) {
+            if (colors[left] == colors[right]) {
+                if (neededTime[left] < neededTime[right]) {
+                    sum += neededTime[left];
+                    left = right;
+                } else
+                    sum += neededTime[right];
+            } else
+                left = right;
+        }
+
+        return sum;
+    }
+};
+*/
+
+/* Approach 2 (Greedy): */
 class Solution {
   public:
     int minCost(string colors, vector<int> &neededTime) {
