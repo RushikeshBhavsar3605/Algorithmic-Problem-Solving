@@ -1,2 +1,4 @@
 **/output.exe
 .vscode
+.cph
+*.bin
