@@ -62,28 +62,61 @@ using namespace std;
         std::cout << (x) << '\n';                                                                                      \
     } while (0)
 
-/* Approach 1 (2D Difference + Prefix Sum): */
+/* Approach 1 (2D Difference + Prefix Sum):
 class Solution {
   public:
     vector<vector<int>> rangeAddQueries(int n, vector<vector<int>> &queries) {
-        vvi diff(n + 1, vi(n + 1));
+        vvi diff(n, vi(n, 0));
 
+        // Mark range boundaries in difference array
         iterate(query, queries) {
             int row1 = query[0], col1 = query[1];
             int row2 = query[2], col2 = query[3];
-            diff[row1][col1] += 1;
-            diff[row2 + 1][col1] -= 1;
-            diff[row1][col2 + 1] -= 1;
-            diff[row2 + 1][col2 + 1] += 1;
+
+            loop(row, row1, row2 + 1) {
+                diff[row][col1] += 1; // Mark range start
+                if (col2 < n - 1)
+                    diff[row][col2 + 1] -= 1; // Mark range end
+            }
         }
 
-        vvi mat(n, vi(n));
-        loop(i, 0, n) {
-            loop(j, 0, n) {
-                int x1 = (i == 0) ? 0 : mat[i - 1][j];
-                int x2 = (j == 0) ? 0 : mat[i][j - 1];
-                int x3 = (i == 0 || j == 0) ? 0 : mat[i - 1][j - 1];
-                mat[i][j] = diff[i][j] + x1 + x2 - x3;
+        // Convert difference array to actual values via prefix sum
+        loop(row, 0, n)
+            loop(col, 1, n)
+                diff[row][col] += diff[row][col - 1];
+
+        return diff;
+    }
+};
+*/
+
+/* Approach 2 (Optimized 2D Difference): */
+class Solution {
+  public:
+    vector<vector<int>> rangeAddQueries(int n, vector<vector<int>> &queries) {
+        vvi diff(n + 1, vi(n + 1, 0)); // Extra row/col for boundary handling
+
+        // Mark rectangle corners in 2D difference array
+        iterate(query, queries) {
+            int row1 = query[0], col1 = query[1];
+            int row2 = query[2], col2 = query[3];
+
+            diff[row1][col1] += 1;         // Top-left: start both dimensions
+            diff[row1][col2 + 1] -= 1;     // Top-right: end column
+            diff[row2 + 1][col1] -= 1;     // Bottom-left: end row
+            diff[row2 + 1][col2 + 1] += 1; // Bottom-right: end both dimensions
+        }
+
+        vvi mat(n, vi(n, 0));
+        // Apply 2D prefix sum to materialize final values
+        loop(row, 0, n) {
+            loop(col, 0, n) {
+                int x1 = (row == 0) ? 0 : mat[row - 1][col]; // Top cell
+                int x2 = (col == 0) ? 0 : mat[row][col - 1]; // Left cell
+                int x3 =
+                    (row == 0 || col == 0) ? 0 : mat[row - 1][col - 1]; // Diagonal (subtract to avoid double-counting)
+
+                mat[row][col] = diff[row][col] + x1 + x2 - x3;
             }
         }
 
