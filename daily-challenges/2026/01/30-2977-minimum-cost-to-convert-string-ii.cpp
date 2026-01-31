@@ -1,5 +1,8 @@
+#include <bits/stdc++.h>
+using namespace std;
+
 struct Trie {
-    Trie* child[26];
+    Trie *child[26];
     int id;
 
     Trie() {
@@ -9,7 +12,7 @@ struct Trie {
     }
 };
 
-int add(Trie* node, const string& word, int& index) {
+int add(Trie *node, const string &word, int &index) {
     for (char ch : word) {
         int i = ch - 'a';
         if (!node->child[i])
@@ -21,20 +24,21 @@ int add(Trie* node, const string& word, int& index) {
     return node->id;
 }
 
-void update(long long& x, long long y) {
+void update(long long &x, long long y) {
     if (x == -1 || y < x)
         x = y;
 }
 
 class Solution {
-private:
+  private:
     static constexpr int inf = INT_MAX / 2;
 
-public:
-    long long minimumCost(string source, string target, vector<string>& original, vector<string>& changed, vector<int>& cost) {
+  public:
+    long long minimumCost(string source, string target, vector<string> &original, vector<string> &changed,
+                          vector<int> &cost) {
         int n = source.size();
         int m = original.size();
-        Trie* root = new Trie();
+        Trie *root = new Trie();
 
         int p = -1;
         vector<vector<int>> G(m * 2, vector<int>(m * 2, inf));
@@ -63,8 +67,8 @@ public:
             if (source[j] == target[j])
                 update(f[j], base);
 
-            Trie* u = root;
-            Trie* v = root;
+            Trie *u = root;
+            Trie *v = root;
             for (int i = j; i < n; i++) {
                 u = u->child[source[i] - 'a'];
                 v = v->child[target[i] - 'a'];
@@ -78,3 +82,20 @@ public:
         return f[n - 1];
     }
 };
+
+int main() {
+    Solution obj;
+    vector<string> original = {"a", "b", "c", "c", "e", "d"};
+    vector<string> changed = {"b", "c", "b", "e", "b", "e"};
+    vector<int> cost = {2, 5, 5, 1, 2, 20};
+    cout << obj.minimumCost("abcd", "acbe", original, changed, cost) << endl;
+    original = {"bcd", "fgh", "thh"};
+    changed = {"cde", "thh", "ghh"};
+    cost = {1, 3, 5};
+    cout << obj.minimumCost("abcdefgh", "acdeeghh", original, changed, cost) << endl;
+    original = {"bcd", "defgh"};
+    changed = {"ddd", "ddddd"};
+    cost = {100, 1578};
+    cout << obj.minimumCost("abcdefgh", "addddddd", original, changed, cost) << endl;
+    return 0;
+}
