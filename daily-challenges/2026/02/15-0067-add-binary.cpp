@@ -89,22 +89,33 @@ template <typename T> void dump2D(const T &a, const char *name) {
 class Solution {
   public:
     string addBinary(string a, string b) {
+        // init: result string, pointers at end of both strings, carry
         string res = "";
         int i = sz(a) - 1;
         int j = sz(b) - 1;
         int carry = 0;
 
+        // loop: process until both strings and carry are exhausted
         while (i >= 0 || j >= 0 || carry) {
+            // init: start sum with carry
             int sum = carry;
+
+            // add current bit from string a (if exists)
             if (i >= 0)
                 sum += a[i--] - '0';
+
+            // add current bit from string b (if exists)
             if (j >= 0)
                 sum += b[j--] - '0';
 
+            // update: new carry for next iteration
             carry = sum / 2;
+
+            // append: current result bit (sum % 2)
             res += to_string(sum % 2);
         }
 
+        // final step: reverse since bits were added from LSB to MSB
         reverse(all(res));
         return res;
     }
