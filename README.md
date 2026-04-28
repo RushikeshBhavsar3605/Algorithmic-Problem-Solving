@@ -1,6 +1,6 @@
 # 🧠 Algorithmic Problem Solving Vault
 
-This repository contains the raw receipts of my algorithmic problem-solving pipeline. It houses **42,000+ lines of strictly typed C++ code**, representing optimal solutions to over 750 complex computational bottlenecks.
+This repository contains the raw receipts of my algorithmic problem-solving pipeline. It houses **42,000+ lines of strictly typed C++ code**, representing optimal solutions to over 850 complex computational bottlenecks.
 
 I don't just solve for the green "Accepted" checkmark. Every solution here is engineered for strict Time/Space complexity constraints. I treat these algorithmic challenges exactly how I treat backend system design: identify redundant computations, cache overlapping subproblems, and optimize the execution path.
 
