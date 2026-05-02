@@ -6,8 +6,8 @@ I don't just solve for the green "Accepted" checkmark. Every solution here is en
 
 ## 📊 The Metrics
 
-- **LeetCode Rating:** 1888 (Knight Badge) 🛡️
-- **Global Rank:** Top 4.7% globally
+- **LeetCode Rating:** 1940 (Knight Badge) 🛡️
+- **Global Rank:** Top 3.4% globally
 - **Volume:** 850+ Problems Solved
 - **Consistency:** 450+ Day Active Streak
 - **Stack:** C++ (Focus on STL optimization and memory-safe pointers)
