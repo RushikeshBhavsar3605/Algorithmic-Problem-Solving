@@ -136,6 +136,24 @@ template <typename Node> void print(Node *head) {
     cout << endl;
 }
 
+template <typename T> void print(std::stack<T> st) {
+    if (st.empty()) {
+        std::cout << "[EMPTY]\n";
+        return;
+    }
+
+    std::cout << "\n        TOP\n";
+
+    while (!st.empty()) {
+        std::cout << "    +---------+\n";
+        std::cout << "    | " << std::setw(7) << st.top() << " |\n";
+        st.pop();
+    }
+
+    std::cout << "    +---------+\n";
+    std::cout << "       BOTTOM\n\n";
+}
+
 // ==========================================
 // Linked List Printers
 // ==========================================
