@@ -206,3 +206,21 @@ void prettyPrintTree(TreeNode *node, string prefix = "", bool isLeft = true) {
     if (node->left)
         prettyPrintTree(node->left, prefix + (isLeft ? "    " : "│   "), true);
 }
+
+// ==========================================
+// Helper Functions
+// ==========================================
+template <typename T> ListNode *getLinkedList(vector<T> &nums) {
+    if (sz(nums) == 0)
+        return nullptr;
+
+    ListNode *head = new ListNode(-1);
+    ListNode *curr = head;
+
+    iterate(num, nums) {
+        curr->next = new ListNode(num);
+        curr = curr->next;
+    }
+
+    return head->next;
+}
