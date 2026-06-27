@@ -123,13 +123,50 @@ template <typename T> void print(vector<vector<T>> &vv) {
     }
 }
 
-/* Approach (Naive): */
+/* Approach 1 (Naive):
 class Solution {
   public:
     int strStr(string haystack, string needle) {
         loop(i, 0, sz(haystack) - sz(needle) + 1)
             if (haystack.substr(i, sz(needle)) == needle)
                 return i;
+
+        return -1;
+    }
+};
+*/
+
+/* Approach 2 (KMP LPS): */
+class Solution {
+  public:
+    int strStr(string haystack, string needle) {
+        int n = sz(haystack);
+        int m = sz(needle);
+
+        vi lps(m, 0);
+
+        int pre = 0;
+        loop(suf, 1, m) {
+            while (pre > 0 && needle[pre] != needle[suf])
+                pre = lps[pre - 1];
+
+            if (needle[pre] == needle[suf])
+                pre++;
+
+            lps[suf] = pre;
+        }
+
+        pre = 0;
+        loop(suf, 0, n) {
+            while (pre > 0 && needle[pre] != haystack[suf])
+                pre = lps[pre - 1];
+
+            if (needle[pre] == haystack[suf])
+                pre++;
+
+            if (pre == m)
+                return suf - m + 1;
+        }
 
         return -1;
     }
